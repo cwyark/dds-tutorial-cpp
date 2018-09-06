@@ -15,6 +15,7 @@
 ##############################################################################
 # Courtesy of Ivan Galvez Junquera <ivgalvez@gmail.com>
 ##############################################################################
+
 FIND_PATH(OpenSplice_INCLUDE_DIR
 	NAMES
 		make_files.py

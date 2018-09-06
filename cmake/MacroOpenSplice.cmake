@@ -11,6 +11,7 @@
 
 
 # Macro to create a list with all the generated source files for a given .idl filename
+
 MACRO (DEFINE_OpenSplice_SOURCES idlfilename)
 	SET(outsources)
 	GET_FILENAME_COMPONENT(it ${idlfilename} ABSOLUTE)
@@ -28,7 +29,20 @@ MACRO (OpenSplice_IDLGEN idlfilename)
 	ADD_CUSTOM_COMMAND (
 		OUTPUT ${outsources}
 		COMMAND ${OpenSplice_IDLGEN_BINARY}
-		ARGS  -l isocpp2 -d gen ${idlfilename}
+    ARGS  -l isocpp2 -d gen ${PROJECT_SOURCE_DIR}/${idlfilename}
 		DEPENDS ${it}
 	)
 ENDMACRO (OpenSplice_IDLGEN)
+
+MACRO (OpenSplice_IDLGEN_FILES idlfilenames)
+foreach(idl ${idlfilenames})
+  OpenSplice_IDLGEN (${idl})
+  string (REGEX REPLACE "\(.*\).idl" "./gen/\\1.cpp" VARS_1 ${idl})
+  string (REGEX REPLACE "\(.*\).idl" "./gen/\\1.h" VARS_2 ${idl})
+  string (REGEX REPLACE "\(.*\).idl" "./gen/\\1_DCPS.h" VARS_4 ${idl})
+  string (REGEX REPLACE "\(.*\).idl" "./gen/\\1SplDcps.cpp" VARS_7 ${idl})
+  string (REGEX REPLACE "\(.*\).idl" "./gen/\\1SplDcps.h" VARS_8 ${idl})
+  string (REGEX REPLACE "\(.*\).idl" "./gen/ccpp_\\1.h" VARS_9 ${idl})
+  set(OpenSplice_DATAMODEL ${OpenSplice_DATAMODEL} ${VARS_0} ${VARS_2} ${VARS_3} ${VARS_4} ${VARS_5} ${VARS_6} ${VARS_7} ${VARS_8} ${VARS_9})
+endforeach(idl)
+ENDMACRO (OpenSplice_IDLGEN_FILES)

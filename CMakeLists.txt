@@ -1,0 +1,15 @@
+cmake_minimum_required (VERSION 3.0)
+set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
+set(CMAKE_MACOSX_RPATH 1)
+include (MacroOpenSplice)
+include (osmacros)
+find_package (OpenSplice REQUIRED)
+
+add_subdirectory(ch1)
+
+# Debug use
+# jget_cmake_property(_variableNames VARIABLES)
+# jlist (SORT _variableNames)
+# jforeach (_variableName ${_variableNames})
+# j    message(STATUS "${_variableName}=${${_variableName}}")
+# jendforeach()
