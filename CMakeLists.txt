@@ -5,7 +5,9 @@ include (MacroOpenSplice)
 include (osmacros)
 find_package (OpenSplice REQUIRED)
 
-add_subdirectory(ch1)
+add_subdirectory(helloworld)
+
+set (CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 # Debug use
 # jget_cmake_property(_variableNames VARIABLES)

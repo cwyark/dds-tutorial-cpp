@@ -27,8 +27,6 @@ SET(OpenSplice_INCLUDE_DIRS
   $ENV{OSPL_HOME}/include
   $ENV{OSPL_HOME}/include/sys
   $ENV{OSPL_HOME}/include/dcps/C++/isocpp2
-  $ENV{OSPL_HOME}/include/dcps/C++/SACPP
-  
 )
 
 # Find libraries

@@ -34,8 +34,8 @@ MACRO (OpenSplice_IDLGEN idlfilename)
 	)
 ENDMACRO (OpenSplice_IDLGEN)
 
-MACRO (OpenSplice_IDLGEN_FILES idlfilenames)
-foreach(idl ${idlfilenames})
+MACRO (OpenSplice_IDLGEN_FILES _targets target_name)
+foreach(idl ${_targets})
   OpenSplice_IDLGEN (${idl})
   string (REGEX REPLACE "\(.*\).idl" "./gen/\\1.cpp" VARS_1 ${idl})
   string (REGEX REPLACE "\(.*\).idl" "./gen/\\1.h" VARS_2 ${idl})
@@ -44,5 +44,17 @@ foreach(idl ${idlfilenames})
   string (REGEX REPLACE "\(.*\).idl" "./gen/\\1SplDcps.h" VARS_8 ${idl})
   string (REGEX REPLACE "\(.*\).idl" "./gen/ccpp_\\1.h" VARS_9 ${idl})
   set(OpenSplice_DATAMODEL ${OpenSplice_DATAMODEL} ${VARS_0} ${VARS_2} ${VARS_3} ${VARS_4} ${VARS_5} ${VARS_6} ${VARS_7} ${VARS_8} ${VARS_9})
+
+  add_library (${target_name} SHARED ${OpenSplice_DATAMODEL})
+
+  target_link_libraries (
+    ${target_name} 
+    ${OpenSplice_LIBRARIES}
+  )
 endforeach(idl)
 ENDMACRO (OpenSplice_IDLGEN_FILES)
+
+add_definitions (
+ ${OpenSplice_DEFINITIONS}
+ ${DEFINITIONS}
+)
