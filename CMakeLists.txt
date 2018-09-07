@@ -6,6 +6,7 @@ include (osmacros)
 find_package (OpenSplice REQUIRED)
 
 add_subdirectory(helloworld)
+add_subdirectory(partition)
 
 set (CMAKE_EXPORT_COMPILE_COMMANDS ON)
 

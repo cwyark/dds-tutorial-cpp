@@ -1,0 +1,9 @@
+module BlockData
+{
+  struct Msg
+  {
+    string blockID;
+    float value;
+  };
+  #pragma keylist Msg blockID
+};
