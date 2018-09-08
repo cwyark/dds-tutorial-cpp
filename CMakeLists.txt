@@ -8,6 +8,7 @@ find_package (OpenSplice REQUIRED)
 add_subdirectory(helloworld)
 add_subdirectory(partition)
 add_subdirectory(topickey)
+add_subdirectory(contentfilter)
 
 set (CMAKE_EXPORT_COMPILE_COMMANDS ON)
 

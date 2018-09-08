@@ -1,0 +1,9 @@
+module ContentFilter
+{
+  struct Msg
+  {
+    unsigned short sensorID;
+    float value;
+  };
+  #pragma keylist Msg sensorID
+};
