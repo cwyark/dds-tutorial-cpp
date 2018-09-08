@@ -12,7 +12,8 @@ void test_keyed_topic(void) {
   // Create the keyed and keyless topic
   dds::topic::qos::TopicQos topicQos = dp.default_topic_qos()
                         << dds::core::policy::Durability::Transient()
-                        << dds::core::policy::Reliability::Reliable();
+                        << dds::core::policy::Reliability::Reliable()
+                        << dds::core::policy::History::KeepAll();
   dds::topic::Topic<TopicKey::KeyedTempSensor> keyed_topic(dp, "KeyedTopic", topicQos);
 
   // Create publisher
@@ -37,27 +38,26 @@ void test_keyed_topic(void) {
   std::default_random_engine gen = std::default_random_engine(rd());
   std::uniform_real_distribution<float> dis(1.0,100.0);
   
-  for (int i = 0; i < 10; i++) {
-    for (int j = 0; j < 10; j++) {
+  for (int i = 0; i < 3; i++) {
+    for (int j = 0; j < 3; j++) {
       TopicKey::KeyedTempSensor msgInstance(j, dis(gen));
       keyed_writer << msgInstance;
-      std::cout << "Writing message to keyed topic" << std::endl;
-      std::cout << "sensorID " << msgInstance.sensorID() << std::endl;
-      std::cout << "value " << msgInstance.value() << std::endl;
+      std::cout << "Writing message to keyed topic ";
+      std::cout << " sensorID " << msgInstance.sensorID();
+      std::cout << " value " << msgInstance.value() << std::endl;
     }
   }
 
-  //std::this_thread::sleep_for(std::chrono::seconds(2));
   std::cout << "Now start receiving message" << std::endl;
-  int count = 10;
+  int count = 3;
   do {
     dds::sub::LoanedSamples<TopicKey::KeyedTempSensor> samples = keyed_reader.take();
     for (dds::sub::LoanedSamples<TopicKey::KeyedTempSensor>::const_iterator sample = samples.begin();
         sample < samples.end(); ++sample) {
           if (sample->info().valid()) {
-            std::cout << "message received: " << std::endl;
-            std::cout << "sensorID: " << sample->data().sensorID() << std::endl;
-            std::cout << "value: " << sample->data().value() << std::endl;
+            std::cout << "message received: ";
+            std::cout << " sensorID: " << sample->data().sensorID();
+            std::cout << " value: " << sample->data().value() << std::endl;
           }
         }
     std::this_thread::sleep_for(std::chrono::seconds(1));
@@ -72,7 +72,8 @@ void test_keyless_topic(void) {
   // Create the keyed and keyless topic
   dds::topic::qos::TopicQos topicQos = dp.default_topic_qos()
                         << dds::core::policy::Durability::Transient()
-                        << dds::core::policy::Reliability::Reliable();
+                        << dds::core::policy::Reliability::Reliable()
+                        << dds::core::policy::History::KeepAll();
   dds::topic::Topic<TopicKey::KeylessTempSensor> keyless_topic(dp, "KeylessTopic", topicQos);
 
   // Create publisher
@@ -97,27 +98,27 @@ void test_keyless_topic(void) {
   std::default_random_engine gen = std::default_random_engine(rd());
   std::uniform_real_distribution<float> dis(1.0,100.0);
   
-  for (int i = 0; i < 10; i++) {
-    for (int j = 0; j < 10; j++) {
+  for (int i = 0; i < 3; i++) {
+    for (int j = 0; j < 3; j++) {
       TopicKey::KeylessTempSensor msgInstance(j, dis(gen));
       keyless_writer << msgInstance;
-      std::cout << "Writing message to keyless topic" << std::endl;
-      std::cout << "sensorID " << msgInstance.sensorID() << std::endl;
-      std::cout << "value " << msgInstance.value() << std::endl;
+      std::cout << "Writing message to keyless topic";
+      std::cout << " sensorID " << msgInstance.sensorID();
+      std::cout << " value " << msgInstance.value() << std::endl;
     }
   }
 
   std::cout << "Now start receiving message" << std::endl;
 
-  int count = 10;
+  int count = 3;
   do {
     dds::sub::LoanedSamples<TopicKey::KeylessTempSensor> samples = keyless_reader.take();
     for (dds::sub::LoanedSamples<TopicKey::KeylessTempSensor>::const_iterator sample = samples.begin();
         sample < samples.end(); ++sample) {
           if (sample->info().valid()) {
-            std::cout << "message received: " << std::endl;
-            std::cout << "sensorID: " << sample->data().sensorID() << std::endl;
-            std::cout << "value: " << sample->data().value() << std::endl;
+            std::cout << "message received: ";
+            std::cout << " sensorID: " << sample->data().sensorID();
+            std::cout << " value: " << sample->data().value() << std::endl;
           }
         }
     std::this_thread::sleep_for(std::chrono::seconds(1));
