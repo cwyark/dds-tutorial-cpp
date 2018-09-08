@@ -1,0 +1,18 @@
+module TopicKey
+{
+  struct KeyedTempSensor
+  {
+    unsigned short sensorID;
+    float value;
+  };
+  #pragma keylist KeyedTempSensor sensorID
+
+
+  struct KeylessTempSensor
+  {
+    unsigned short sensorID;
+    float value;
+  };
+  #pragma keylist KeylessTempSensor
+
+};
