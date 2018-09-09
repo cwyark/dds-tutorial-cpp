@@ -9,6 +9,8 @@ add_subdirectory(helloworld)
 add_subdirectory(partition)
 add_subdirectory(topickey)
 add_subdirectory(contentfilter)
+add_subdirectory(lifecycle)
+add_subdirectory(ownership)
 
 set (CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
