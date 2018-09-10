@@ -6,7 +6,7 @@ include_directories (
   ${OpenSplice_INCLUDE_DIRS}
 )
 
-set (IDL_FILES topickey.idl)
+set (IDL_FILES TopicKey.idl)
 set (DATAMODEL topickey)
 
 OpenSplice_IDLGEN_FILES(${IDL_FILES} ${DATAMODEL})
