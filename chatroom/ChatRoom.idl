@@ -1,0 +1,18 @@
+
+module ChatRoom
+{
+  struct UserMessage
+  {
+    string userID;
+    string message;
+  };
+  #pragma keylist UserMessage userID
+
+  struct UserActivity
+  {
+    string userID;
+    unsigned short online;
+  };
+  #pragma keylist UserActivity userID
+
+};

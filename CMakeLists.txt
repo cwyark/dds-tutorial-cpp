@@ -11,6 +11,7 @@ add_subdirectory(topickey)
 add_subdirectory(contentfilter)
 add_subdirectory(lifecycle)
 add_subdirectory(ownership)
+add_subdirectory(chatroom)
 
 set (CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
