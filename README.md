@@ -17,12 +17,9 @@ To try the examples you need to have:
   - g++ or clang with support for C+0x
   - cmake 2.8 or higher
 
-To compile simply do:
+# How to compile code ?
 
-$ cmake .
-$ make
-
-That's it.
-
--Happy Hacking
-
+```bash
+$> cmake -Bbuild -H.
+$> cmake --build build
+```
