@@ -25,4 +25,4 @@ $> cmake --build build
 ```
 
 # Note for examples
-* Coherent: Please check the [local readme](#coherent/README.md) for coherent.
+* Coherent: Please check the [readme](coherent/README.md) within [coherent example](coherent) for more information.
