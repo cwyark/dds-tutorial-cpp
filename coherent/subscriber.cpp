@@ -1,4 +1,5 @@
-/*                     ADLINK Advanced Robotic Platfrom Group
+/*              ADLINK Advanced Robotic Platfrom Group
+ * Author: Ewing Kang (ewing.kang@adlinktech.com)
  * 
  *                         OpenSplice DDS
  *
@@ -59,8 +60,6 @@ int main (int argc, char *argv[])
         dds::topic::qos::TopicQos topicQos = dp.default_topic_qos()
                                                     << dds::core::policy::Durability::Transient()
                                                     << dds::core::policy::Reliability::Reliable();
-                                                    // << dds::core::policy::Ownership::Exclusive();
-
 
         dds::topic::Topic<CoherentData::Stock> topicA(dp, "CoherentTopicA", topicQos);
 		dds::topic::Topic<CoherentData::Stock> topicB(dp, "CoherentTopicB", topicQos);
@@ -108,73 +107,9 @@ int main (int argc, char *argv[])
         std::cout << "===[Subscriber] Ready and waiting..." << std::endl;
         std::cout << "   Topic   Price   Publisher   ownership strength" << std::endl;
 
+		// Start two thread that wait and print the data
 		std::thread thrd_subA(topic_subA, std::ref(waitsetA), std::ref(readerSCA), std::ref(drA) );
 		std::thread thrd_subB(topic_subB, std::ref(waitsetB), std::ref(readerSCB), std::ref(drB) );
-        /** The subscriber will read messages sent by the publishers and display those with the
-         * highest ownership strength. */
-        /*bool closed = false;
-        int count = 0;
-        do
-        {
-			// wait set for topic A 
-			conditions = waitsetA.wait();
-			for (uint i=0; i < conditions.size(); i++)
-			{
-				if (conditions[i] != readerSCA) {
-					std::cerr << "Something triggered the waitSet" << std::endl;
-					continue;
-				}
-				dds::sub::LoanedSamples<CoherentData::Stock> samplesA = drA.take();
-				for (dds::sub::LoanedSamples<CoherentData::Stock>::const_iterator sampleA = samplesA.begin();
-					sampleA < samplesA.end();
-					++sampleA)
-				{
-					if (sampleA->info().valid())
-					{
-						if(sampleA->data().price() < -0.0f)
-						{
-							closed = true;
-							break;
-						}
-						std::cout  << std::fixed << std::setprecision(1) 
-								   << "   " << sampleA->data().ticker() << "   " << sampleA->data().price() 
-								   << "   " << sampleA->data().publisher() << "   " << sampleA->data().strength() << std::endl;
-					}
-				}
-				//std::this_thread::sleep_for(std::chrono::seconds(2));
-				++count;
-			}
-			
-			// wait for topic B 
-			conditions = waitsetB.wait();
-			for (uint i=0; i < conditions.size(); i++)
-			{
-				if (conditions[i] != readerSCB) {
-					std::cerr << "Something triggered the waitSet" << std::endl;
-					continue;
-				}
-				dds::sub::LoanedSamples<CoherentData::Stock> samplesB = drB.take();
-				for (dds::sub::LoanedSamples<CoherentData::Stock>::const_iterator sampleB = samplesB.begin();
-					sampleB < samplesB.end();
-					++sampleB)
-				{
-					if (sampleB->info().valid())
-					{
-						if(sampleB->data().price() < -0.0f)
-						{
-							closed = true;
-							break;
-						}
-						std::cout  << std::fixed << std::setprecision(1) 
-								   << "   " << sampleB->data().ticker() << "   " << sampleB->data().price() 
-								   << "   " << sampleB->data().publisher() << "   " << sampleB->data().strength() << std::endl;
-					}
-				}
-				//std::this_thread::sleep_for(std::chrono::seconds(2));
-				++count;
-			}
-        }
-        while (!closed && count < 1500);*/
 		
 		thrd_subA.join();
 		thrd_subB.join();

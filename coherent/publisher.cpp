@@ -1,4 +1,6 @@
-/*
+/*              ADLINK Advanced Robotic Platfrom Group
+ * Author: Ewing Kang (ewing.kang@adlinktech.com)
+ * 
  *                         OpenSplice DDS
  *
  *   This software and documentation are Copyright 2006 to  PrismTech
@@ -67,7 +69,6 @@ int main (int argc, char *argv[])
              = dp.default_topic_qos()
                 << dds::core::policy::Durability::Transient()
                 << dds::core::policy::Reliability::Reliable();
-                // dds::core::policy::Ownership::Exclusive();
 
         /** A dds::topic::Topic is created for our sample type on the domain participant. */
         dds::topic::Topic<CoherentData::Stock> topicA(dp, "CoherentTopicA", topicQos);
@@ -107,9 +108,7 @@ int main (int argc, char *argv[])
          * the topic instance after the writer deletion, this deletion implicitly performs
          * DataWriter::unregister_instance */
         dds::pub::qos::DataWriterQos dwqos = topicA.qos();
-		dwqos << dds::core::policy::History::KeepAll();
-        /*dwqos << dds::core::policy::WriterDataLifecycle::ManuallyDisposeUnregisteredInstances()
-            << dds::core::policy::OwnershipStrength(topic_pub_interval);*/
+		dwqos << dds::core::policy::History::KeepAll();		// So the coherent will work properly
 
         /** A dds::pub::DataWriter is created on the Publisher & Topic with the modififed Qos. */
         dds::pub::DataWriter<CoherentData::Stock> dwA(pub, topicA, dwqos);
