@@ -23,3 +23,6 @@ To try the examples you need to have:
 $> cmake -Bbuild -H.
 $> cmake --build build
 ```
+
+# Note for examples
+* Coherent: Please check the [local readme](#coherent/README.md) for coherent.
