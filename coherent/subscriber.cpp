@@ -67,20 +67,25 @@ int main (int argc, char *argv[])
         /** A dds::sub::Subscriber is created on the domain participant. */
         std::string name = "Coherent example";
         dds::sub::qos::SubscriberQos subQos
-            = dp.default_subscriber_qos()
-                << dds::core::policy::Partition(name);
-				
+            = dp.default_subscriber_qos() << dds::core::policy::Partition(name);
+		
+		std::string coherent_name;
 		switch (coherent_choice) {
 		  case 1 : 
 			subQos << dds::core::policy::Presentation::InstanceAccessScope(true, false);
+			coherent_name = "Instance";
 			break;
 		  case 2 :
 			subQos << dds::core::policy::Presentation::TopicAccessScope(true, false);
+			coherent_name = "Topic";
 			break;
 		  case 3 :
 			subQos << dds::core::policy::Presentation::GroupAccessScope(true, false);
+			coherent_name = "Group";
 			break;
-		  default:break;
+		  default:
+			coherent_name = "No coherent"; 
+			break;
 		}
 				
         dds::sub::Subscriber sub(dp, subQos);
@@ -104,8 +109,10 @@ int main (int argc, char *argv[])
 		waitsetB.attach_condition(readerSCB); 
 		
 				
-        std::cout << "===[Subscriber] Ready and waiting..." << std::endl;
-        std::cout << "   Topic   Price   Publisher   ownership strength" << std::endl;
+        std::cout << "===== [Subscriber] =====" << std::endl;
+		std::cout << "Listening with coherent type: \"" << coherent_name << "\"" << std::endl;
+		std::cout << "=== subscribing ===" << std::endl;
+        std::cout << "   Topic      ID     Publisher   = 1" << std::endl;
 
 		// Start two thread that wait and print the data
 		std::thread thrd_subA(topic_subA, std::ref(waitsetA), std::ref(readerSCA), std::ref(drA) );
@@ -139,10 +146,19 @@ void topic_subA( dds::core::cond::WaitSet& waitsetA,
 		for (uint i=0; i < conditions.size(); i++)
 		{
 			if (conditions[i] != readerSCA) {
-				std::cerr << "Something triggered the waitSet" << std::endl;
+				std::cerr << "Something else triggered the waitSet" << std::endl;
 				continue;
 			}
 			dds::sub::LoanedSamples<CoherentData::Stock> samplesA = drA.take();
+			
+			if( 0 == samplesA.length() )
+			{
+				std::cout  << "-- EMPTY SAMPLES A--"<< std::endl;
+				++count;
+				break;
+				
+			}
+			
 			for (dds::sub::LoanedSamples<CoherentData::Stock>::const_iterator sampleA = samplesA.begin();
 				sampleA < samplesA.end();
 				++sampleA)
@@ -157,6 +173,8 @@ void topic_subA( dds::core::cond::WaitSet& waitsetA,
 					std::cout  << std::fixed << std::setprecision(1) 
 								<< "   " << sampleA->data().ticker() << "   " << sampleA->data().price() 
 								<< "   " << sampleA->data().publisher() << "   " << sampleA->data().strength() << std::endl;
+				}else {
+					std::cout  << "-- instance_state change A--"<< std::endl;
 				}
 			}
 			std::cout  << "   -- loop A: " << count << " --" << std::endl;
@@ -180,10 +198,18 @@ void topic_subB( dds::core::cond::WaitSet& waitsetB,
 		for (uint i=0; i < conditions.size(); i++)
 		{
 			if (conditions[i] != readerSCB) {
-				std::cerr << "Something triggered the waitSet" << std::endl;
+				std::cerr << "Something else triggered the waitSet" << std::endl;
 				continue;
 			}
 			dds::sub::LoanedSamples<CoherentData::Stock> samplesB = drB.take();
+			
+			if( 0 == samplesB.length())
+			{
+				std::cout  << "-- EMPTY SAMPLES B --"<< std::endl;
+				++count;
+				break;
+			}
+			
 			for (dds::sub::LoanedSamples<CoherentData::Stock>::const_iterator sampleB = samplesB.begin();
 				sampleB < samplesB.end();
 				++sampleB)
@@ -198,6 +224,8 @@ void topic_subB( dds::core::cond::WaitSet& waitsetB,
 					std::cout  << std::fixed << std::setprecision(1) 
 								<< "   " << sampleB->data().ticker() << "   " << sampleB->data().price() 
 								<< "   " << sampleB->data().publisher() << "   " << sampleB->data().strength() << std::endl;
+				}else {
+					std::cout  << "-- instance_state change B--"<< std::endl;
 				}
 			}
 			

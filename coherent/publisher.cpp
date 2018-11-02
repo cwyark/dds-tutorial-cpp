@@ -77,8 +77,8 @@ int main (int argc, char *argv[])
         /** A dds::pub::Publisher is created on the domain participant. */
         std::string name = "Coherent example";
         dds::pub::qos::PublisherQos pubQos
-            = dp.default_publisher_qos()
-                << dds::core::policy::Partition(name);
+            = dp.default_publisher_qos() << dds::core::policy::Partition(name);
+		
 		std::string coherent_name;
 		switch (coherent_choice) {
 		  case 1 : 
@@ -115,9 +115,11 @@ int main (int argc, char *argv[])
 		dds::pub::DataWriter<CoherentData::Stock> dwB(pub, topicB, dwqos);
 
         std::cout << "===== [Publisher] =====" << std::endl;
-		std::cout << "Publishing two topics: " << publisher_nameA <<" and " << publisher_nameB << " with interval between Topics: " << topic_pub_interval << "sec" << std::endl;
-		std::cout << "Each topics will have two samples, with interval " << sample_pub_interval << "sec" << std::endl;
-        std::cout << "Total iterations: " << max_iterations << " ; Coherent type: " << coherent_name << std::endl;
+		std::cout << "Publishing two topics: " << publisher_nameA <<" and " << publisher_nameB << ". Each topics will have two samples." << std::endl;
+		std::cout << "Interval between Topics: " << topic_pub_interval << " sec." << std::endl;
+		std::cout << "Interval between samples: " << sample_pub_interval << " sec." << std::endl;
+		std::cout << "Interval between iterations: " << iter_interval << " sec." << std::endl;
+        std::cout << "Total iterations: " << max_iterations << " times; Coherent type: \"" << coherent_name << "\"" << std::endl;
 		std::cout << "=== publishing ===" << std::endl;
 
         /** Samples are created and then written. */
