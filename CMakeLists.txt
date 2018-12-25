@@ -2,11 +2,13 @@ cmake_minimum_required (VERSION 3.0)
 set (CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 set(CMAKE_MACOSX_RPATH 1)
+set(CMAKE_CXX_STANDARD 11)
+
 include (MacroOpenSplice)
 include (osmacros)
 
 find_package (OpenSplice REQUIRED)
-find_package (Log4cpp)
+find_package (Log4cpp REQUIRED)
 
 add_subdirectory(examples)
 add_subdirectory(tools)

@@ -17,6 +17,10 @@ To try the examples you need to have:
   - g++ or clang with support for C+0x
   - cmake 2.8 or higher
 
+```bash
+$> sudo apt install automake1.11 libtool autoconf liblog4cpp5-dev
+```
+
 # How to compile code ?
 
 ```bash

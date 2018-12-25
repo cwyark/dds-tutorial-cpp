@@ -16,13 +16,6 @@
 # Courtesy of Ivan Galvez Junquera <ivgalvez@gmail.com>
 ##############################################################################
 
-FIND_PATH(OpenSplice_INCLUDE_DIR
-	NAMES
-		make_files.py
-	PATHS
-		$ENV{OSPL_HOME}/include
-)
-
 SET(OpenSplice_INCLUDE_DIRS 
   $ENV{OSPL_HOME}/include
   $ENV{OSPL_HOME}/include/sys
