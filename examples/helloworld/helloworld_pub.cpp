@@ -1,7 +1,6 @@
 #include <iostream>
 #include <thread>
 #include <chrono>
-#include"log4cpp/Category.hh"
 #include <gen/HelloWorld_DCPS.hpp>
 
 int main (int argc, char *argv[]) {

@@ -6,23 +6,19 @@
 #  LOG4CPP_FOUND       - True if LOG4CPP found.
 
 
-if (LOG4CPP_INCLUDE_DIR)
-  # Already in cache, be silent
-  set(LOG4CPP_FIND_QUIETLY TRUE)
-endif ()
-
-find_path(LOG4CPP_INCLUDE_DIR log4cpp/Category.hh
-  /opt/local/include
-  /usr/local/include
-  /usr/include
+find_path(LOG4CPP_INCLUDE_DIR 
+  NAMES log4cpp/Category.hh NO_DEFAULT_PATH
+  PATHS
+    /opt/local/include
+    /usr/local/include
+    /usr/include
 )
 
 set(LOG4CPP_NAMES log4cpp)
-find_library(LOG4CPP_LIBRARY
+find_library(LOG4CPP_LIBRARY NO_DEFAULT_PATH
   NAMES ${LOG4CPP_NAMES}
-  PATHS /usr/lib /usr/local/lib /opt/local/lib
+  PATHS /usr/local/lib
 )
-
 
 if (LOG4CPP_INCLUDE_DIR AND LOG4CPP_LIBRARY)
   set(LOG4CPP_FOUND TRUE)
@@ -37,9 +33,7 @@ else ()
 endif ()
 
 if (LOG4CPP_FOUND)
-  if (NOT LOG4CPP_FIND_QUIETLY)
     message(STATUS "Found LOG4CPP: ${LOG4CPP_LIBRARIES}")
-  endif ()
 else ()
   if (LOG4CPP_FIND_REQUIRED)
     message(STATUS "Looked for LOG4CPP libraries named ${LOG4CPPS_NAMES}.")

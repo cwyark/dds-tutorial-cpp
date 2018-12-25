@@ -6,7 +6,7 @@ include (MacroOpenSplice)
 include (osmacros)
 
 find_package (OpenSplice REQUIRED)
-find_package (Log4cpp REQUIRED)
+find_package (Log4cpp)
 
 add_subdirectory(examples)
 add_subdirectory(tools)
