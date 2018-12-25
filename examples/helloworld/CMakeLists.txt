@@ -4,7 +4,7 @@ project(hello-world)
 include_directories (
   ${PROJECT_SOURCE_DIR}
   ${OpenSplice_INCLUDE_DIRS}
-  ${LOG4CPP_INCLUDE_DIRS}
+  ${Log4cpp_INCLUDE_DIRS}
 )
 
 set (IDL_FILES HelloWorld.idl)
@@ -40,6 +40,6 @@ set (SUB_EXE
 add_executable (${SUB_EXE} ${SUB_SOURCES})
 target_link_libraries (${SUB_EXE}
   ${OpenSplice_LIBRARIES}
-  ${LOG4CPP_LIBRARIES}
+  ${Log4cpp_LIBRARIES}
   ${DATAMODEL}
 )

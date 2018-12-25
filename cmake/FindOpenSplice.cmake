@@ -19,7 +19,7 @@
 SET(OpenSplice_INCLUDE_DIRS 
   $ENV{OSPL_HOME}/include
   $ENV{OSPL_HOME}/include/sys
-  $ENV{OSPL_HOME}/include/dcps/C++/isocpp2
+  $ENV{OSPL_HOME}/include/dcps/C++/SACPP
 )
 
 # Find libraries
@@ -30,18 +30,16 @@ FIND_LIBRARY(KERNEL_LIBRARY
 		$ENV{OSPL_HOME}/lib
 )
 
-FIND_LIBRARY(DCPSISOCPP_LIBRARY
+FIND_LIBRARY(DCPSSACPP_LIBRARY
 	NAMES
-		dcpsisocpp2
+		dcpssacpp
 	PATHS
 		$ENV{OSPL_HOME}/lib
 )
 
 SET(OpenSplice_LIBRARIES
 			${KERNEL_LIBRARY}
-			${DCPSISOCPP_LIBRARY}
-			${DCPSCPP_LIBRARY}
-
+			${DCPSSACPP_LIBRARY}
 )
 
 # Binary for the IDL compiler 
