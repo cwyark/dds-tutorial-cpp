@@ -1,0 +1,32 @@
+Compiled source #
+###################
+*.com
+*.class
+*.dll
+*.exe
+*.o
+*.lo
+*.la
+*.so
+#auto generated
+Makefile.in
+Makefile
+*.log
+
+config.status
+doc/Doxyfile
+include/config.h
+include/log4cpp/config.h
+include/stamp-h1
+libtool
+log4cpp-config
+log4cpp.pc
+log4cpp.spec
+src/.deps/
+tests/.deps/
+
+src/.libs/
+tests/.libs/
+tests/testbench
+tests/testmain
+

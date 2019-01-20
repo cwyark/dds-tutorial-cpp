@@ -4,14 +4,13 @@ set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 set(CMAKE_MACOSX_RPATH 1)
 set(CMAKE_CXX_STANDARD 11)
 
+add_subdirectory(library)
+
 include (MacroOpenSplice)
 include (osmacros)
-
-find_package (OpenSplice REQUIRED)
-find_package (Log4cpp REQUIRED)
-
-add_subdirectory(examples)
 add_subdirectory(tools)
+add_subdirectory(examples)
+
 
 # Debug use
 # get_cmake_property(_variableNames VARIABLES)
